@@ -1,37 +1,46 @@
-# recommend_system
+# JAVA推荐系统
 
-#### 介绍
-java利用 皮尔森(pearson)相关系数实现千人千面的推荐系统
+#### 系统原理
+该系统使用java编写的基于用户的协同过滤算法（UserCF）
+利用统计学的相关系数经常皮尔森（pearson）相关系数计算相关系数来实现千人千面的推荐系统。
+一、协同过滤算法原理
+协同过滤推荐算法是诞生最早，并且较为著名的推荐算法。主要的功能是预测和推荐。算法通过对用户历史行为数据的挖掘发现用户的偏好，基于不同的偏好对用户进行群组划分并推荐品味相似的商品。协同过滤推荐算法分为两类，分别是基于用户的协同过滤算法(user-based collaboratIve filtering)，和基于物品的协同过滤算法(item-based collaborative filtering)。简单的说就是：人以类聚，物以群分。
+皮尔森(pearson)相关系数公式
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0731/193612_8dfc4af8_1981977.png "屏幕截图.png")
+公式定义为： 两个连续变量(X,Y)的pearson相关性系数(Px,y)等于它们之间的协方差cov(X,Y)除以它们各自标准差的乘积(σX,σY)。系数的取值总是在-1.0到1.0之间，接近0的变量被成为无相关性，接近1或者-1被称为具有强相关性。
+通常情况下通过以下取值范围判断变量的相关强度：
+相关系数          0.8-1.0     极强相关
+                 0.6-0.8     强相关
+                 0.4-0.6     中等程度相关
+                 0.2-0.4     弱相关
+                 0.0-0.2     极弱相关或无相关
 
 #### 软件架构
-软件架构说明
+Spring boot单项目
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 安装教程
 
+1.  git下载源码
+2.  maven构建依赖
+3.  idea-java运行
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. 找到  src / main / java / com / tarzan / recommend / Service / Recommend.java  右键java 运行
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0731/194926_fa8e1cba_1981977.png "屏幕截图.png")
 
-#### 参与贡献
+2.  找到FileDataSource类,将文件路径改为你本地的目录
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0731/195117_29356bc7_1981977.png "屏幕截图.png")
+3. 文件ml-100k 在 src / main / resources目录下
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+#### 技术交流&问题反馈
+
+      刚刚整理的代码还有很多不足之处，如有问题请联系我
+
+      联系QQ:1334512682 
+      微信号：vxhqqh
 
 
-#### 码云特技
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)

@@ -6,7 +6,6 @@ import com.tarzan.recommend.dto.UserDTO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
-import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -62,6 +61,7 @@ public class FileDataSource {
      * @date 2020年07月31日 16:54:51
      */
     public static List<UserDTO> getUserData() {
+        folderPath=new FileDataSource().getClass().getResource("/ml-100k").getPath();
         List<UserDTO> userList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.user");
@@ -96,6 +96,7 @@ public class FileDataSource {
      * @date 2020年07月31日 16:54:22
      */
     public static List<ItemDTO> getItemData() {
+        folderPath=new FileDataSource().getClass().getResource("/ml-100k").getPath();
         List<ItemDTO> itemList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.item");

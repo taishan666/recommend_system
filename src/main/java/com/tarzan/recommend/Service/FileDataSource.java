@@ -17,7 +17,7 @@ import java.util.List;
 public class FileDataSource {
 
 
-      public final static String folderPath="F:\\ml-100k";
+      public  static String folderPath;
 
 
     /**
@@ -30,6 +30,7 @@ public class FileDataSource {
      * @date 2020年07月31日 16:53:40
      */
     public static List<RelateDTO> getData() {
+        folderPath=new FileDataSource().getClass().getResource("/ml-100k").getPath();
         List<RelateDTO> relateList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.data");

@@ -18,27 +18,22 @@ import java.util.stream.Collectors;
  */
 public class Recommend{
 
-
     /**
      * 方法描述: 猜你喜欢
      *
      * @param
-     * @Return {@link List< ItemDTO>}
+     * @Return {@link List<ItemDTO>}
      * @throws
      * @author tarzan
      * @date 2020年07月31日 17:28:06
      */
-    public static List<ItemDTO>  guessYouLike(){
+    public static List<ItemDTO>  guessUserLike(int userId){
         CoreMath coreMath = new CoreMath();
         List<RelateDTO> data= FileDataSource.getData();
-        List<Integer> recommendations = coreMath.recommend(2, data);
+        List<Integer> recommendations = coreMath.recommend(userId, data);
         List<ItemDTO> itemList= FileDataSource.getItemData().stream().filter(e->recommendations.contains(e.getId())).collect(Collectors.toList());
         return itemList;
     }
 
-    public static void main(String[] args) {
-        List<ItemDTO> itemList= Recommend.guessYouLike();
-        System.out.println("------猜你可能喜欢---------------下列电影="+itemList.stream().map(e->e.getName()).collect(Collectors.toList()));
-    }
 
 }

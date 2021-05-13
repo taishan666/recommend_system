@@ -32,12 +32,10 @@ Spring boot单项目
 3.  idea-java运行
 #### 使用说明
 
-1. 找到  src / main / java / com / tarzan / recommend / Service / Recommend.java  右键java 运行
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0731/194926_fa8e1cba_1981977.png "屏幕截图.png")
-
-2.  找到FileDataSource类,将文件路径改为你本地的目录
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0731/195117_29356bc7_1981977.png "屏幕截图.png")
-3. 文件ml-100k 在 src / main / resources目录下
+1. 找到  src / main / java / com / tarzan / recommend / RecommendSystemApplication.java  右键java 运行
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0513/134117_2e95c3e7_1981977.png "屏幕截图.png")
+2.传入不同的用户id，得到不同的推荐数据
+![输入图片说明](https://images.gitee.com/uploads/images/2021/0513/134306_fc20dd60_1981977.png "屏幕截图.png")
 
 #### 技术交流&问题反馈
 

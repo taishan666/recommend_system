@@ -36,6 +36,7 @@ Spring boot单项目
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0513/134117_2e95c3e7_1981977.png "屏幕截图.png")
 2.传入不同的用户id，得到不同的推荐数据
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0513/134306_fc20dd60_1981977.png "屏幕截图.png")
+3.项目中用到的文件数据集ml-100k 在 src / main / resources目录下
 
 #### 技术交流&问题反馈
 

@@ -29,23 +29,19 @@ public class CoreMath {
         //按用户分组
         Map<Integer, List<RelateDTO>>  userMap=list.stream().collect(Collectors.groupingBy(RelateDTO::getUseId));
         //获取其他用户与当前用户的关系值
-        Map<Double, Integer> distances = computeNeighbor(userId, userMap);
+        Map<Integer,Double>  userDisMap = computeNeighbor(userId, userMap);
+        //获取关系最近的用户
+        double maxvalue=Collections.max(userDisMap.values());
+        Set<Integer> userIds=userDisMap.entrySet().stream().filter(e->e.getValue()==maxvalue).map(Map.Entry::getKey).collect(Collectors.toSet());
         //取关系最近的用户
-        Integer nearestUserId = distances.values().iterator().next();
+        Integer nearestUserId = userIds.stream().findAny().get();
         //最近邻用户看过电影列表
         List<Integer>  neighborItems = userMap.get(nearestUserId).stream().map(RelateDTO::getModuleId).collect(Collectors.toList());
         //指定用户看过电影列表
         List<Integer>  userItems  = userMap.get(userId).stream().map(RelateDTO::getModuleId).collect(Collectors.toList());
-
-        //找到最近邻看过，但是该用户没看过的电影，计算推荐，放入推荐列表
-        List<Integer> recommendList = new ArrayList<>();
-        for (Integer item : neighborItems) {
-            if (!userItems.contains(item)) {
-                recommendList.add(item);
-            }
-        }
-       // Collections.sort(recommendList);
-        return recommendList;
+        //找到最近邻看过，但是该用户没看过的电影
+        neighborItems.removeAll(userItems);
+        return neighborItems;
     }
 
 
@@ -53,20 +49,22 @@ public class CoreMath {
      * 在给定userId的情况下，计算其他用户和它的相关系数并排序
      * @param userId 用户id
      * @param userMap 用户电影评分关系mqp
-     * @return Map<Double, Integer>
+     * @return Map<Integer,Double>
      */
-    private Map<Double, Integer> computeNeighbor(Integer userId, Map<Integer,List<RelateDTO>>  userMap) {
-        Map<Double, Integer> distances = new TreeMap<>();
+    private Map<Integer,Double> computeNeighbor(Integer userId, Map<Integer,List<RelateDTO>>  userMap) {
+        Map<Integer,Double> userDisMap = new TreeMap<>();
         List<RelateDTO> userItems=userMap.get(userId);
         userMap.forEach((k,v)->{
             //排除此用户
             if(!k.equals(userId)){
+                //关系系数
+                double coefficient = pearsonDis(v,userItems);
                 //关系距离
-                double distance = pearsonDis(v,userItems);
-                distances.put(distance, k);
+                double distance=Math.abs(coefficient);
+                userDisMap.put(k,distance);
             }
         });
-        return distances;
+        return userDisMap;
     }
 
 
@@ -102,6 +100,9 @@ public class CoreMath {
      */
     public static double getRelate(List<Integer> xs, List<Integer> ys){
         int n=xs.size();
+        if (n==0) {
+            return 0D;
+        }
         double Ex= xs.stream().mapToDouble(x->x).sum();
         double Ey=ys.stream().mapToDouble(y->y).sum();
         double Ex2=xs.stream().mapToDouble(x->Math.pow(x,2)).sum();

@@ -12,49 +12,57 @@ import java.util.stream.IntStream;
  *
  * @author tarzan
  * @version 1.0
- * @company 洛阳图联科技有限公司
- * @copyright (c) 2019 LuoYang TuLian Co'Ltd Inc. All rights reserved.
  * @date 2020/7/31$ 15:21$
  * @since JDK1.8
  */
 public class CoreMath {
 
+    /**
+     * 方法描述: 推荐电影id列表
+     *
+     * @param userId 当前用户
+     * @param list 用户电影评分数据
+     * @return {@link List<Integer>}
+     * @date 2023年02月02日 14:51:42
+     */
     public List<Integer> recommend(Integer userId, List<RelateDTO> list) {
-        //找到最近邻用户id
-        Map<Double, Integer> distances = computeNearestNeighbor(userId, list);
-        Integer nearest = distances.values().iterator().next();
-
+        //按用户分组
         Map<Integer, List<RelateDTO>>  userMap=list.stream().collect(Collectors.groupingBy(RelateDTO::getUseId));
-
+        //获取其他用户与当前用户的关系值
+        Map<Double, Integer> distances = computeNeighbor(userId, userMap);
+        //取关系最近的用户
+        Integer nearestUserId = distances.values().iterator().next();
         //最近邻用户看过电影列表
-        List<Integer>  neighborItemList = userMap.get(nearest).stream().map(e->e.getModuleId()).collect(Collectors.toList());
+        List<Integer>  neighborItems = userMap.get(nearestUserId).stream().map(RelateDTO::getModuleId).collect(Collectors.toList());
         //指定用户看过电影列表
-        List<Integer>  userItemList  = userMap.get(userId).stream().map(e->e.getModuleId()).collect(Collectors.toList());;
+        List<Integer>  userItems  = userMap.get(userId).stream().map(RelateDTO::getModuleId).collect(Collectors.toList());
 
         //找到最近邻看过，但是该用户没看过的电影，计算推荐，放入推荐列表
         List<Integer> recommendList = new ArrayList<>();
-        for (Integer item : neighborItemList) {
-            if (!userItemList.contains(item)) {
+        for (Integer item : neighborItems) {
+            if (!userItems.contains(item)) {
                 recommendList.add(item);
             }
         }
-        Collections.sort(recommendList);
+       // Collections.sort(recommendList);
         return recommendList;
     }
 
 
     /**
      * 在给定userId的情况下，计算其他用户和它的相关系数并排序
-     * @param userId
-     * @param list
-     * @return
+     * @param userId 用户id
+     * @param userMap 用户电影评分关系mqp
+     * @return Map<Double, Integer>
      */
-    private Map<Double, Integer> computeNearestNeighbor(Integer userId, List<RelateDTO> list) {
-        Map<Integer, List<RelateDTO>>  userMap=list.stream().collect(Collectors.groupingBy(RelateDTO::getUseId));
+    private Map<Double, Integer> computeNeighbor(Integer userId, Map<Integer,List<RelateDTO>>  userMap) {
         Map<Double, Integer> distances = new TreeMap<>();
+        List<RelateDTO> userItems=userMap.get(userId);
         userMap.forEach((k,v)->{
-            if(k!=userId){
-                double distance = pearson_dis(v,userMap.get(userId));
+            //排除此用户
+            if(!k.equals(userId)){
+                //关系距离
+                double distance = pearsonDis(v,userItems);
                 distances.put(distance, k);
             }
         });
@@ -65,16 +73,16 @@ public class CoreMath {
     /**
      * 计算两个序列间的相关系数
      *
-     * @param xList
-     * @param yList
-     * @return
+     * @param xList 用户1喜欢的电影
+     * @param yList 用户2喜欢的电影
+     * @return double
      */
-    private double pearson_dis(List<RelateDTO> xList, List<RelateDTO> yList) {
+    private double pearsonDis(List<RelateDTO> xList, List<RelateDTO> yList) {
         List<Integer> xs= Lists.newArrayList();
         List<Integer> ys= Lists.newArrayList();
         xList.forEach(x->{
             yList.forEach(y->{
-                if(x.getModuleId()==y.getModuleId()){
+                if(x.getModuleId().equals(y.getModuleId())){
                     xs.add(x.getIndex());
                     ys.add(y.getIndex());
                 }
@@ -86,14 +94,13 @@ public class CoreMath {
     /**
      * 方法描述: 皮尔森（pearson）相关系数计算
      *
-     * @param xs
-     * @param ys 
-     * @Return {@link Double}
-     * @throws 
+     * @param xs x集合
+     * @param ys y集合
+     * @Return {@link double}
      * @author tarzan
      * @date 2020年07月31日 17:03:20
      */
-    public static Double getRelate(List<Integer> xs, List<Integer>  ys){
+    public static double getRelate(List<Integer> xs, List<Integer> ys){
         int n=xs.size();
         double Ex= xs.stream().mapToDouble(x->x).sum();
         double Ey=ys.stream().mapToDouble(y->y).sum();
@@ -102,7 +109,9 @@ public class CoreMath {
         double Exy= IntStream.range(0,n).mapToDouble(i->xs.get(i)*ys.get(i)).sum();
         double numerator=Exy-Ex*Ey/n;
         double denominator=Math.sqrt((Ex2-Math.pow(Ex,2)/n)*(Ey2-Math.pow(Ey,2)/n));
-        if (denominator==0) return 0.0;
+        if (denominator==0) {
+            return 0D;
+        }
         return numerator/denominator;
     }
 

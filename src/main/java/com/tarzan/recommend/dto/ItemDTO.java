@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 /**
  * 业务项
  *
- * @author liu yapeng
+ * @author TARZAN
  * @version 1.0
- * @company 洛阳图联科技有限公司
- * @copyright (c) 2019 LuoYang TuLian Co'Ltd Inc. All rights reserved.
  * @date 2020/7/31$ 15:02$
  * @since JDK1.8
  */
@@ -18,9 +16,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDTO {
+    /** 主键 */
     private Integer id;
+    /** 名称 */
     private String name;
+    /** 日期 */
     private String date;
+    /** 链接 */
     private String link;
 
 }

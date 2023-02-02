@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * 用户对象
  *
- * @author liu yapeng
+ * @author TARZAN
  * @version 1.0
  * @company 洛阳图联科技有限公司
  * @copyright (c) 2019 LuoYang TuLian Co'Ltd Inc. All rights reserved.
@@ -18,15 +18,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    //主键
+    /** 主键 */
     private Integer id;
-    //年纪
+    /** 年纪 */
     private Integer age;
-    //性别
+    /** 性别 */
     private String sex;
-    //职业
+    /** 职业 */
     private String profession;
-    //邮编
+    /** 邮编 */
     private String postcode;
 
 }

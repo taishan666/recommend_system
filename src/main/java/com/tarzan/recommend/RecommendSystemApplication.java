@@ -1,8 +1,7 @@
 package com.tarzan.recommend;
 
-import com.tarzan.recommend.Service.Recommend;
+import com.tarzan.recommend.service.Recommend;
 import com.tarzan.recommend.dto.ItemDTO;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;

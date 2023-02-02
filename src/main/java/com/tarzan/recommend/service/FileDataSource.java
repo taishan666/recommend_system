@@ -1,4 +1,4 @@
-package com.tarzan.recommend.Service;
+package com.tarzan.recommend.service;
 
 import com.tarzan.recommend.dto.ItemDTO;
 import com.tarzan.recommend.dto.RelateDTO;
@@ -10,7 +10,11 @@ import org.assertj.core.util.Lists;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * @author tarzan
+ */
 @Data
 @Slf4j
 public class FileDataSource {
@@ -22,20 +26,18 @@ public class FileDataSource {
     /**
      * 方法描述: 读取基础数据
      *
-     * @param
-     * @Return {@link List< RelateDTO>}
-     * @throws
+     * @Return {@link List<RelateDTO>}
      * @author tarzan
      * @date 2020年07月31日 16:53:40
      */
     public static List<RelateDTO> getData() {
-        folderPath=new FileDataSource().getClass().getResource("/ml-100k").getPath();
+        folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
         List<RelateDTO> relateList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.data");
             InputStreamReader reader = new InputStreamReader(out, StandardCharsets.UTF_8);
             BufferedReader in = new BufferedReader(reader);
-            String line = null;
+            String line;
             while ((line = in.readLine()) != null) {
                 String newline = line.replaceAll("[\t]", " ");
                 String[] ht = newline.split(" ");
@@ -54,20 +56,18 @@ public class FileDataSource {
     /**
      * 方法描述: 读取用户数据
      *
-     * @param
-     * @Return {@link List< UserDTO>}
-     * @throws
+     * @Return {@link List<UserDTO>}
      * @author tarzan
      * @date 2020年07月31日 16:54:51
      */
     public static List<UserDTO> getUserData() {
-        folderPath=new FileDataSource().getClass().getResource("/ml-100k").getPath();
+        folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
         List<UserDTO> userList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.user");
             InputStreamReader reader = new InputStreamReader(out, StandardCharsets.UTF_8);
             BufferedReader in = new BufferedReader(reader);
-            String line = null;
+            String line;
             while ((line = in.readLine()) != null) {
                 String newline = line.replaceAll("[\t]", " ");
                 String[] ht = newline.split("\\|");
@@ -89,20 +89,18 @@ public class FileDataSource {
     /**
      * 方法描述: 读取电影数据
      *
-     * @param
-     * @Return {@link List< ItemDTO>}
-     * @throws
+     * @Return {@link List<ItemDTO>}
      * @author tarzan
      * @date 2020年07月31日 16:54:22
      */
     public static List<ItemDTO> getItemData() {
-        folderPath=new FileDataSource().getClass().getResource("/ml-100k").getPath();
+        folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
         List<ItemDTO> itemList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.item");
             InputStreamReader reader = new InputStreamReader(out, StandardCharsets.UTF_8);
             BufferedReader in = new BufferedReader(reader);
-            String line = null;
+            String line;
             while ((line = in.readLine()) != null) {
                 String newline = line.replaceAll("[\t]", " ");
                 String[] ht = newline.split("\\|");

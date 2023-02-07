@@ -39,7 +39,7 @@
 
 #### 代码实现
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0731/195616_1a98b43e_1981977.png "屏幕截图.png")
+![输入图片说明](1675752085157.jpg)
 
 #### 软件架构
 Spring boot单项目
@@ -52,9 +52,45 @@ Spring boot单项目
 #### 使用说明
 
 1. 找到  src / main / java / com / tarzan / recommend / RecommendSystemApplication.java  右键java 运行
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0513/134117_2e95c3e7_1981977.png "屏幕截图.png")
-2.传入不同的用户id，得到不同的推荐数据
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0513/134306_fc20dd60_1981977.png "屏幕截图.png")
+![输入图片说明](1675756915170.jpg)
+2.传入不同的用户id和不同的电影id，得到不同的推荐数据
+            
+            ------基于用户协同过滤推荐---------------下列电影
+            Pulp Fiction (1994)
+            While You Were Sleeping (1995)
+            Four Weddings and a Funeral (1994)
+            Remains of the Day, The (1993)
+            Sleepless in Seattle (1993)
+            Dances with Wolves (1990)
+            Blues Brothers, The (1980)
+            Sting, The (1973)
+            Graduate, The (1967)
+            Groundhog Day (1993)
+            Back to the Future (1985)
+            Young Frankenstein (1974)
+            M*A*S*H (1970)
+            When Harry Met Sally... (1989)
+            Clueless (1995)
+            Bridges of Madison County, The (1995)
+            Muriel's Wedding (1994)
+            Mrs. Doubtfire (1993)
+            Ghost (1990)
+            Harold and Maude (1971)
+            Duck Soup (1933)
+            Butch Cassidy and the Sundance Kid (1969)
+            Annie Hall (1977)
+            Manhattan (1979)
+            Cool Hand Luke (1967)
+            Great Dictator, The (1940)
+            Somewhere in Time (1980)
+            Being There (1979)
+            Pretty Woman (1990)
+            French Kiss (1995)
+            Big Green, The (1995)
+            ------基于物品协同过滤推荐---------------下列电影
+            Guilty as Sin (1993)
+            Colonel Chabert, Le (1994)
+
 3.项目中用到的文件数据集ml-100k 在 src / main / resources目录下
 
 #### 技术交流&问题反馈

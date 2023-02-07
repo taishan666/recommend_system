@@ -1,6 +1,8 @@
 package com.tarzan.recommend.service;
 
 import com.tarzan.recommend.core.CoreMath;
+import com.tarzan.recommend.core.ItemCF;
+import com.tarzan.recommend.core.UserCF;
 import com.tarzan.recommend.dto.ItemDTO;
 import com.tarzan.recommend.dto.RelateDTO;
 
@@ -25,10 +27,24 @@ public class Recommend{
      * @author tarzan
      * @date 2020年07月31日 17:28:06
      */
-    public static List<ItemDTO>  guessUserLike(int userId){
-        CoreMath coreMath = new CoreMath();
+    public static List<ItemDTO>  userCfRecommend(int userId){
         List<RelateDTO> data= FileDataSource.getData();
-        List<Integer> recommendations = coreMath.recommend(userId, data);
+        List<Integer> recommendations = UserCF.recommend(userId, data);
+        return FileDataSource.getItemData().stream().filter(e->recommendations.contains(e.getId())).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 方法描述: 猜你喜欢
+     *
+     * @param itemId 物品id
+     * @Return {@link List<ItemDTO>}
+     * @author tarzan
+     * @date 2020年07月31日 17:28:06
+     */
+    public static List<ItemDTO>  itemCfRecommend(int itemId){
+        List<RelateDTO> data= FileDataSource.getData();
+        List<Integer> recommendations = ItemCF.recommend(itemId, data);
         return FileDataSource.getItemData().stream().filter(e->recommendations.contains(e.getId())).collect(Collectors.toList());
     }
 

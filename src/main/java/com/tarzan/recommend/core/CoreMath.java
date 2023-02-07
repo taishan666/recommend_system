@@ -4,7 +4,6 @@ import com.tarzan.recommend.dto.RelateDTO;
 import org.assertj.core.util.Lists;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -17,72 +16,54 @@ import java.util.stream.IntStream;
  */
 public class CoreMath {
 
-    /**
-     * 方法描述: 推荐电影id列表
-     *
-     * @param userId 当前用户
-     * @param list 用户电影评分数据
-     * @return {@link List<Integer>}
-     * @date 2023年02月02日 14:51:42
-     */
-    public List<Integer> recommend(Integer userId, List<RelateDTO> list) {
-        //按用户分组
-        Map<Integer, List<RelateDTO>>  userMap=list.stream().collect(Collectors.groupingBy(RelateDTO::getUseId));
-        //获取其他用户与当前用户的关系值
-        Map<Integer,Double>  userDisMap = computeNeighbor(userId, userMap);
-        //获取关系最近的用户
-        double maxvalue=Collections.max(userDisMap.values());
-        Set<Integer> userIds=userDisMap.entrySet().stream().filter(e->e.getValue()==maxvalue).map(Map.Entry::getKey).collect(Collectors.toSet());
-        //取关系最近的用户
-        Integer nearestUserId = userIds.stream().findAny().get();
-        //最近邻用户看过电影列表
-        List<Integer>  neighborItems = userMap.get(nearestUserId).stream().map(RelateDTO::getModuleId).collect(Collectors.toList());
-        //指定用户看过电影列表
-        List<Integer>  userItems  = userMap.get(userId).stream().map(RelateDTO::getModuleId).collect(Collectors.toList());
-        //找到最近邻看过，但是该用户没看过的电影
-        neighborItems.removeAll(userItems);
-        return neighborItems;
-    }
 
 
     /**
-     * 在给定userId的情况下，计算其他用户和它的相关系数并排序
-     * @param userId 用户id
-     * @param userMap 用户电影评分关系mqp
+     * 计算相关系数并排序
+     * @param key
+     * @param map
      * @return Map<Integer,Double>
      */
-    private Map<Integer,Double> computeNeighbor(Integer userId, Map<Integer,List<RelateDTO>>  userMap) {
-        Map<Integer,Double> userDisMap = new TreeMap<>();
-        List<RelateDTO> userItems=userMap.get(userId);
-        userMap.forEach((k,v)->{
+    public static Map<Integer,Double> computeNeighbor(Integer key, Map<Integer,List<RelateDTO>>  map,int type) {
+        Map<Integer,Double> distMap = new TreeMap<>();
+        List<RelateDTO> userItems=map.get(key);
+        map.forEach((k,v)->{
             //排除此用户
-            if(!k.equals(userId)){
+            if(!k.equals(key)){
                 //关系系数
-                double coefficient = pearsonDis(v,userItems);
+                double coefficient = relateDist(v,userItems,type);
                 //关系距离
                 double distance=Math.abs(coefficient);
-                userDisMap.put(k,distance);
+                distMap.put(k,distance);
             }
         });
-        return userDisMap;
+        return distMap;
     }
 
 
     /**
      * 计算两个序列间的相关系数
      *
-     * @param xList 用户1喜欢的电影
-     * @param yList 用户2喜欢的电影
+     * @param xList
+     * @param yList
+     * @param type 类型0基于用户推荐 1基于物品推荐
      * @return double
      */
-    private double pearsonDis(List<RelateDTO> xList, List<RelateDTO> yList) {
+    private static double relateDist(List<RelateDTO> xList, List<RelateDTO> yList,int type) {
         List<Integer> xs= Lists.newArrayList();
         List<Integer> ys= Lists.newArrayList();
         xList.forEach(x->{
             yList.forEach(y->{
-                if(x.getModuleId().equals(y.getModuleId())){
-                    xs.add(x.getIndex());
-                    ys.add(y.getIndex());
+                if(type==0){
+                    if(x.getItemId().equals(y.getItemId())){
+                        xs.add(x.getIndex());
+                        ys.add(y.getIndex());
+                    }
+                }else{
+                    if(x.getUseId().equals(y.getUseId())){
+                        xs.add(x.getIndex());
+                        ys.add(y.getIndex());
+                    }
                 }
             });
         });
@@ -100,7 +81,8 @@ public class CoreMath {
      */
     public static double getRelate(List<Integer> xs, List<Integer> ys){
         int n=xs.size();
-        if (n==0) {
+        //至少有两个元素
+        if (n<2) {
             return 0D;
         }
         double Ex= xs.stream().mapToDouble(x->x).sum();

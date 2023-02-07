@@ -11,9 +11,12 @@ public class RecommendSystemApplication {
 
 	public static void main(String[] args) {
 		//SpringApplication.run(RecommendSystemApplication.class, args);
-		List<ItemDTO> itemList= Recommend.guessUserLike(2);
-		System.out.println("------猜你可能喜欢---------------下列电影");
+		System.out.println("------基于用户协同过滤推荐---------------下列电影");
+		List<ItemDTO> itemList= Recommend.userCfRecommend(2);
 		itemList.forEach(e-> System.out.println(e.getName()));
+		System.out.println("------基于物品协同过滤推荐---------------下列电影");
+		List<ItemDTO> itemList1= Recommend.itemCfRecommend(2);
+		itemList1.forEach(e-> System.out.println(e.getName()));
 	}
 
 }

@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class RelateDTO {
     /** 用户id */
     private Integer useId;
-    /** 业务id */
-    private Integer moduleId;
+    /** 物品id */
+    private Integer itemId;
     /** 指数 */
     private Integer index;
 

@@ -32,7 +32,10 @@ public class UserCF {
         double maxValue=Collections.max(userDisMap.values());
         Set<Integer> userIds=userDisMap.entrySet().stream().filter(e->e.getValue()==maxValue).map(Map.Entry::getKey).collect(Collectors.toSet());
         //取关系最近的用户
-        Integer nearestUserId = userIds.stream().findAny().get();
+        Integer nearestUserId = userIds.stream().findAny().orElse(null);
+        if(nearestUserId==null){
+            return Collections.emptyList();
+        }
         //最近邻用户看过电影列表
         List<Integer>  neighborItems = userMap.get(nearestUserId).stream().map(RelateDTO::getItemId).collect(Collectors.toList());
         //指定用户看过电影列表

@@ -1,11 +1,9 @@
 package com.tarzan.recommend.core;
 
 import com.tarzan.recommend.dto.RelateDTO;
-import org.assertj.core.util.Lists;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * 核心算法

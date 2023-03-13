@@ -40,9 +40,9 @@ public class LenskitDemo {
                 config.bind(ItemScorer.class).to(ItemItemScorer.class);
                 config.set(MinNeighbors.class).to(2);
                 config.set(ModelSize.class).to(1000);
-                config.bind(BaselineScorer.class,ItemScorer.class).to(UserMeanItemScorer.class);
-                config.bind(UserMeanBaseline.class,ItemScorer.class).to(ItemMeanRatingItemScorer.class);
-                config.bind(UserVectorNormalizer.class).to(BaselineSubtractingUserVectorNormalizer.class);
+              //  config.bind(BaselineScorer.class,ItemScorer.class).to(UserMeanItemScorer.class);
+              //  config.bind(UserMeanBaseline.class,ItemScorer.class).to(ItemMeanRatingItemScorer.class);
+             //   config.bind(UserVectorNormalizer.class).to(BaselineSubtractingUserVectorNormalizer.class);
 
                 // 读取数据
                 Path dataFile = Paths.get("data/movielens.yml");

@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      database: recommend
+      uri: mongodb://glqxzh:#5Rd!TC2CBA@119.167.159.215:27017
+  task:
+    scheduling:
+      pool:
+        size: 9
+    execution:
+      pool:
+        core-size: 5
+        max-size: 9

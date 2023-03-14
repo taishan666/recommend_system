@@ -1,4 +1,4 @@
-package com.tarzan.recommend;
+package com.tarzan.recommend.demo;
 
 import org.lenskit.LenskitConfiguration;
 import org.lenskit.LenskitRecommender;
@@ -7,23 +7,13 @@ import org.lenskit.api.ItemRecommender;
 import org.lenskit.api.ItemScorer;
 import org.lenskit.api.Result;
 import org.lenskit.api.ResultList;
-import org.lenskit.baseline.BaselineScorer;
-import org.lenskit.baseline.ItemMeanRatingItemScorer;
-import org.lenskit.baseline.UserMeanBaseline;
-import org.lenskit.baseline.UserMeanItemScorer;
 import org.lenskit.bias.BiasItemScorer;
 import org.lenskit.bias.GlobalAverageRatingBiasModelProvider;
-import org.lenskit.bias.GlobalBiasModel;
 import org.lenskit.data.dao.DataAccessObject;
 import org.lenskit.data.dao.file.StaticDataSource;
 import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
 import org.lenskit.data.entities.Entity;
-import org.lenskit.knn.MinNeighbors;
-import org.lenskit.knn.item.ItemItemScorer;
-import org.lenskit.knn.item.ModelSize;
-import org.lenskit.transform.normalize.BaselineSubtractingUserVectorNormalizer;
-import org.lenskit.transform.normalize.UserVectorNormalizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

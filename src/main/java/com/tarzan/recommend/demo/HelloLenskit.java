@@ -1,4 +1,4 @@
-package com.tarzan.recommend;
+package com.tarzan.recommend.demo;
 
 import com.google.common.base.Throwables;
 import org.lenskit.LenskitConfiguration;

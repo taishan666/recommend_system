@@ -1,10 +1,14 @@
+import org.lenskit.knn.NeighborhoodSize
 import org.lenskit.knn.user.UserUserItemScorer
+import org.lenskit.transform.normalize.DefaultUserVectorNormalizer
+import org.lenskit.transform.normalize.MeanVarianceNormalizer
 import org.lenskit.transform.normalize.UserVectorNormalizer
 import org.lenskit.api.ItemScorer
 import org.lenskit.baseline.BaselineScorer
 import org.lenskit.baseline.ItemMeanRatingItemScorer
 import org.lenskit.baseline.UserMeanBaseline
 import org.lenskit.baseline.UserMeanItemScorer
+import org.lenskit.transform.normalize.VectorNormalizer
 
 //配置项目记分器 使用bind和set方法
 //这里，我们需要一个项目-项目记分器。用ItemItemScorer 作为 ItemScorer 的实现类
@@ -17,6 +21,6 @@ within (UserVectorNormalizer) {
     // use default normalizer, which uses a vector normalizer
     bind UserVectorNormalizer to DefaultUserVectorNormalizer
     // use the mean-variance normalizer
-    bind VectorNormalizer to MeanVarianceVectorNormalizer
+    bind VectorNormalizer to MeanVarianceNormalizer
 }
 set NeighborhoodSize to 30

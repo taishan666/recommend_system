@@ -1,4 +1,4 @@
-package com.tarzan.recommend;
+package com.tarzan.recommend.demo;
 
 import org.lenskit.LenskitConfiguration;
 import org.lenskit.LenskitRecommender;
@@ -7,15 +7,22 @@ import org.lenskit.api.ItemRecommender;
 import org.lenskit.api.ItemScorer;
 import org.lenskit.api.Result;
 import org.lenskit.api.ResultList;
-import org.lenskit.basic.PopularityRankItemScorer;
+import org.lenskit.baseline.BaselineScorer;
+import org.lenskit.baseline.ItemMeanRatingItemScorer;
+import org.lenskit.baseline.UserMeanBaseline;
+import org.lenskit.baseline.UserMeanItemScorer;
+import org.lenskit.config.ConfigHelpers;
 import org.lenskit.data.dao.DataAccessObject;
 import org.lenskit.data.dao.file.StaticDataSource;
 import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
 import org.lenskit.data.entities.Entity;
+import org.lenskit.slopeone.DeviationDamping;
+import org.lenskit.slopeone.SlopeOneItemScorer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,14 +32,22 @@ import java.util.List;
 /**
  * @author Lenovo
  */
-public class LenskitPopular {
+public class LenskitSlopeOne {
     private static final Logger logger = LoggerFactory.getLogger(LenskitDemo.class);
 
     public static void main(String[] args) throws IOException {
         // 配置Lenskit
         LenskitConfiguration config = new LenskitConfiguration();
-        config.bind(ItemScorer.class).to(PopularityRankItemScorer.class);
+/*        config.bind(ItemScorer.class).to(SlopeOneItemScorer.class);
+        config.bind(BaselineScorer.class,ItemScorer.class).to(UserMeanItemScorer.class);
+        config.bind(UserMeanBaseline.class,ItemScorer.class).to(ItemMeanRatingItemScorer.class);
+        config.set(DeviationDamping.class).to(0.0d);*/
 
+        try {
+            config = ConfigHelpers.load(new File("etc/slope-one.groovy"));
+        } catch (IOException e) {
+            throw new RuntimeException("could not load configuration", e);
+        }
         // 读取数据
         Path dataFile = Paths.get("data/movielens.yml");
         StaticDataSource data = StaticDataSource.load(dataFile);

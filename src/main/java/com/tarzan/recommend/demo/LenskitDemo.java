@@ -1,4 +1,4 @@
-package com.tarzan.recommend;
+package com.tarzan.recommend.demo;
 
 import org.lenskit.LenskitConfiguration;
 import org.lenskit.LenskitRecommender;
@@ -8,11 +8,14 @@ import org.lenskit.baseline.BaselineScorer;
 import org.lenskit.baseline.ItemMeanRatingItemScorer;
 import org.lenskit.baseline.UserMeanBaseline;
 import org.lenskit.baseline.UserMeanItemScorer;
+import org.lenskit.basic.RescoringItemRecommender;
+import org.lenskit.basic.TopNItemRecommender;
 import org.lenskit.data.dao.DataAccessObject;
 import org.lenskit.data.dao.file.StaticDataSource;
 import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
 import org.lenskit.data.entities.Entity;
+import org.lenskit.hybrid.RankBlendingItemRecommender;
 import org.lenskit.knn.MinNeighbors;
 import org.lenskit.knn.item.ItemItemScorer;
 import org.lenskit.knn.item.ModelSize;
@@ -40,22 +43,23 @@ public class LenskitDemo {
                 config.bind(ItemScorer.class).to(ItemItemScorer.class);
                 config.set(MinNeighbors.class).to(2);
                 config.set(ModelSize.class).to(1000);
-              //  config.bind(BaselineScorer.class,ItemScorer.class).to(UserMeanItemScorer.class);
-              //  config.bind(UserMeanBaseline.class,ItemScorer.class).to(ItemMeanRatingItemScorer.class);
-             //   config.bind(UserVectorNormalizer.class).to(BaselineSubtractingUserVectorNormalizer.class);
-
+                config.bind(BaselineScorer.class,ItemScorer.class).to(UserMeanItemScorer.class);
+                config.bind(UserMeanBaseline.class,ItemScorer.class).to(ItemMeanRatingItemScorer.class);
+                config.bind(UserVectorNormalizer.class).to(BaselineSubtractingUserVectorNormalizer.class);
                 // 读取数据
                 Path dataFile = Paths.get("data/movielens.yml");
                 StaticDataSource data = StaticDataSource.load(dataFile);
                 DataAccessObject dao = data.get();
-                LenskitRecommenderEngine engine = LenskitRecommenderEngine.build(config, dao);
+                //LenskitRecommender rec = LenskitRecommender.build(config, dao);
+              //  LenskitRecommenderEngine engine = LenskitRecommenderEngine.build(config, data);
                 logger.info("构建推荐引擎");
                 List<Long> users = new ArrayList<>(args.length);
                 for (String arg : args) {
                         users.add(Long.parseLong(arg));
                 }
                 //最后，获取并使用该推荐器。
-                try (LenskitRecommender rec = engine.createRecommender(dao)) {
+                try (LenskitRecommender rec = LenskitRecommender.build(config, dao)) {
+                        rec.close();
                         logger.info("从推荐引擎中获得推荐");
                         //我们想要推荐项
                         ItemRecommender irec = rec.getItemRecommender();

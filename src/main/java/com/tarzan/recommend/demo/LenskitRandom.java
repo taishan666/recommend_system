@@ -1,4 +1,4 @@
-package com.tarzan.recommend;
+package com.tarzan.recommend.demo;
 
 import org.lenskit.LenskitConfiguration;
 import org.lenskit.LenskitRecommender;
@@ -29,8 +29,8 @@ public class LenskitRandom {
     public static void main(String[] args) throws IOException {
         // 配置Lenskit
         LenskitConfiguration config = new LenskitConfiguration();
-      //  config.bind(ItemScorer.class,RandomItemSelector.class);
-
+     //  config.bind(ItemScorer.class).to(BiasItemScorer.class);
+      //  config.addComponent(BiasModel.class);
 
         // 读取数据
         Path dataFile = Paths.get("data/movielens.yml");

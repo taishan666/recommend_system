@@ -1,7 +1,7 @@
 package com.tarzan.recommend;
 
 import com.tarzan.recommend.data.FileDataDao;
-import com.tarzan.recommend.recommender.Recommender;
+import com.tarzan.recommend.recommender.RecommenderFactory;
 import org.lenskit.api.ItemRecommender;
 import org.lenskit.api.Result;
 import org.lenskit.api.ResultList;
@@ -19,16 +19,11 @@ import java.util.List;
 public class RecommenderApplication {
 
     public static void main(String[] args) {
-        List<Long> users = new ArrayList<>(args.length);
-        for (String arg : args) {
-            users.add(Long.parseLong(arg));
-        }
         DataAccessObject  dao=FileDataDao.get();
-        ItemRecommender irec=Recommender.getItemRecommender("popular",dao);
-        for (long user : users) {
+        ItemRecommender irec= RecommenderFactory.getItemRecommender("popular",dao);
             //为该用户获取10个推荐
-            ResultList recs = irec.recommendWithDetails(user, 3, null, null);
-            System.out.format("Recommendations for user %d:\n", user);
+            ResultList recs = irec.recommendWithDetails(0, 3, null, null);
+            System.out.format("Recommendations for user %d:\n", 1);
             for (Result item : recs) {
                 Entity itemData = dao.lookupEntity(CommonTypes.ITEM, item.getId());
                 String name = null;
@@ -37,7 +32,6 @@ public class RecommenderApplication {
                 }
                 System.out.format("\t%d (%s): %.2f\n", item.getId(), name, item.getScore());
             }
-        }
 
     }
 }

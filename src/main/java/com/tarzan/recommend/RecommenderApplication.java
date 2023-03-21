@@ -1,24 +1,21 @@
 package com.tarzan.recommend;
 
-import com.tarzan.recommend.data.FileDataDao;
-import com.tarzan.recommend.recommender.RecommenderFactory;
-import org.lenskit.api.ItemRecommender;
-import org.lenskit.api.Result;
-import org.lenskit.api.ResultList;
-import org.lenskit.data.dao.DataAccessObject;
-import org.lenskit.data.entities.CommonAttributes;
-import org.lenskit.data.entities.CommonTypes;
-import org.lenskit.data.entities.Entity;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author tarzan
  */
+@EnableScheduling
+@SpringBootApplication
 public class RecommenderApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        SpringApplication.run(RecommenderApplication.class, args);
+    }
+
+/*    public static void main(String[] args) {
         DataAccessObject  dao=FileDataDao.get();
         ItemRecommender irec= RecommenderFactory.getItemRecommender("popular",dao);
             //为该用户获取10个推荐
@@ -33,5 +30,5 @@ public class RecommenderApplication {
                 System.out.format("\t%d (%s): %.2f\n", item.getId(), name, item.getScore());
             }
 
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package com.tarzan.recommend.demo;
 
-import com.tarzan.recommend.data.FileDataDao;
+import com.tarzan.recommend.dao.FileDataDao;
 import com.tarzan.recommend.recommender.RecommenderFactory;
 import org.lenskit.api.ItemRecommender;
 import org.lenskit.api.Result;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Lenovo
+ * @author TARZAN
  */
 public class LenskitHybrid {
 

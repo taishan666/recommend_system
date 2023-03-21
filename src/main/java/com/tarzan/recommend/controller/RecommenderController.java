@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @author Lenovo
+ * @author TARZAN
  */
 @Api(tags = "物品推荐接口")
 @RestController

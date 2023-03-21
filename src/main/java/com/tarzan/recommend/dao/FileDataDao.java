@@ -1,4 +1,4 @@
-package com.tarzan.recommend.data;
+package com.tarzan.recommend.dao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.lenskit.data.dao.DataAccessObject;
@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * @author Lenovo
+ * @author TARZAN
  */
 @Slf4j
 public class FileDataDao {
@@ -19,7 +19,7 @@ public class FileDataDao {
     public static DataAccessObject get(){
         if(dao==null){
             Path dataFile = Paths.get("data/movielens.yml");
-            StaticDataSource data = null;
+            StaticDataSource data;
             try {
                 data = StaticDataSource.load(dataFile);
                 dao= data.get();

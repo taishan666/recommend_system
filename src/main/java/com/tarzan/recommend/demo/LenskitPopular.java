@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Lenovo
+ * @author TARZAN
  */
 public class LenskitPopular {
     private static final Logger logger = LoggerFactory.getLogger(LenskitDemo.class);

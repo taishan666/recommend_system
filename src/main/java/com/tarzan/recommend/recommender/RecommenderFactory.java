@@ -1,7 +1,7 @@
 package com.tarzan.recommend.recommender;
 
 import com.tarzan.recommend.config.RecommenderConfigBuilder;
-import com.tarzan.recommend.data.FileDataDao;
+import com.tarzan.recommend.dao.FileDataDao;
 import lombok.extern.slf4j.Slf4j;
 import org.lenskit.LenskitConfiguration;
 import org.lenskit.LenskitRecommender;
@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
- * @author Lenovo
+ * @author TARZAN
  */
 @Slf4j
 public class RecommenderFactory {
@@ -31,7 +31,7 @@ public class RecommenderFactory {
     }
 
     public static ItemRecommender getItemRecommender(String type,DataAccessObject dao){
-        LenskitConfiguration config= RecommenderConfigBuilder.getConfig(type);
+        LenskitConfiguration config= RecommenderConfigBuilder.createConfig(type);
         return getItemRecommender(config,dao);
     }
 

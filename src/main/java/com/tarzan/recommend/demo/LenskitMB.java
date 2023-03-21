@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Lenovo
+ * @author TARZAN
  */
 public class LenskitMB {
     private static final Logger logger = LoggerFactory.getLogger(LenskitDemo.class);

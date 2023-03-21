@@ -50,8 +50,8 @@ public class StartedListener implements ApplicationListener<ApplicationStartedEv
         }
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application is running! Access URLs:\n\t" +
-                "Local: \t\thttp://localhost:" + port + contextPath + "\n\t" +
-                "External: \thttp://" + ip + ':' + port + contextPath + '\n' +
+                "Local: \t\thttp://localhost:" + port + contextPath + "/doc.html\n\t" +
+                "External: \thttp://" + ip + ':' + port + contextPath + "/doc.html\n" +
                 "----------------------------------------------------------");
     }
 

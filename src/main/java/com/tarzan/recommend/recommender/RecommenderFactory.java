@@ -8,8 +8,8 @@ import org.lenskit.LenskitRecommender;
 import org.lenskit.api.ItemRecommender;
 import org.lenskit.data.dao.DataAccessObject;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class RecommenderFactory {
 
-    private static final Map<String,ItemRecommender> recommenderMap=new HashMap<>(10);
+    private static final Map<String, ItemRecommender> RECOMMENDER_POOL = new ConcurrentHashMap<>(10);
 
     public static ItemRecommender getItemRecommender(LenskitConfiguration config, DataAccessObject dao){
         //最后，获取并使用该推荐器。
@@ -37,11 +37,11 @@ public class RecommenderFactory {
 
     public static ItemRecommender getItemRecommender(String type){
         DataAccessObject dao=FileDataDao.get();
-        if(recommenderMap.get(type)!=null){
-            return recommenderMap.get(type);
+        if(RECOMMENDER_POOL.get(type)!=null){
+            return RECOMMENDER_POOL.get(type);
         }else {
             ItemRecommender recommender=getItemRecommender(type,dao);
-            recommenderMap.put(type,recommender);
+            RECOMMENDER_POOL.put(type,recommender);
             return recommender;
         }
     }

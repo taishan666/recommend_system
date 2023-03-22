@@ -18,15 +18,20 @@ public class FileDataDao {
 
     public static DataAccessObject get(){
         if(dao==null){
-            Path dataFile = Paths.get("data/movielens.yml");
-            StaticDataSource data;
-            try {
-                data = StaticDataSource.load(dataFile);
-                dao= data.get();
-            } catch (IOException e) {
-                log.error(e.getMessage());
-            }
+          return load();
         }
         return dao;
     }
+
+    public static DataAccessObject load(){
+        Path dataFile = Paths.get("data/movielens.yml");
+        try {
+            StaticDataSource data= StaticDataSource.load(dataFile);
+            dao= data.get();
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return  dao;
+    }
+
 }

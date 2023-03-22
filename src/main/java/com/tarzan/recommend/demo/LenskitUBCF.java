@@ -3,26 +3,30 @@ package com.tarzan.recommend.demo;
 import org.lenskit.LenskitConfiguration;
 import org.lenskit.LenskitRecommender;
 import org.lenskit.LenskitRecommenderEngine;
-import org.lenskit.api.ItemRecommender;
-import org.lenskit.api.ItemScorer;
-import org.lenskit.api.Result;
-import org.lenskit.api.ResultList;
+import org.lenskit.api.*;
+import org.lenskit.config.ConfigHelpers;
 import org.lenskit.data.dao.DataAccessObject;
 import org.lenskit.data.dao.file.StaticDataSource;
 import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
 import org.lenskit.data.entities.Entity;
 import org.lenskit.knn.MinNeighbors;
+import org.lenskit.knn.item.ItemItemItemBasedItemScorer;
 import org.lenskit.knn.item.ModelSize;
 import org.lenskit.knn.user.UserUserItemScorer;
+import org.lenskit.transform.normalize.DefaultUserVectorNormalizer;
+import org.lenskit.transform.normalize.UserVectorNormalizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author TARZAN
@@ -37,11 +41,12 @@ public class LenskitUBCF {
         config.bind(ItemScorer.class).to(UserUserItemScorer.class);
         config.set(MinNeighbors.class).to(2);
         config.set(ModelSize.class).to(1000);
+        config.bind(ItemBasedItemScorer.class).to(ItemItemItemBasedItemScorer.class);
        // 配置协同过滤算法，使用 Pearson 相似度
      //   config.bind(UserSimilarity.class).to(UserVectorSimilarity.class);
     //    config.bind(VectorSimilarity.class).to(PearsonCorrelation.class);
         // 配置用户向量归一化器
-      //  config.bind(UserVectorNormalizer.class).to(DefaultUserVectorNormalizer.class);
+        config.bind(UserVectorNormalizer.class).to(DefaultUserVectorNormalizer.class);
         // 配置用户相似度阈值，过滤相似度低于该阈值的用户
       //  config.set(UserSimilarityThreshold.class).to(0.5);
       //  config.bind(AbstractItemScorer.class).to(UserUserItemScorer.class);
@@ -66,14 +71,15 @@ public class LenskitUBCF {
         try (LenskitRecommender rec = engine.createRecommender(dao)) {
             logger.info("从推荐引擎中获得推荐");
             //我们想要推荐项
-            ItemRecommender irec = rec.getItemRecommender();
+            ItemBasedItemRecommender irec = rec.getItemBasedItemRecommender();
             //不为空，因为我们配置了一个
             assert irec != null;
             // 循环遍历用户集
-            for (long user : users) {
                 //为该用户获取10个推荐
-                ResultList recs = irec.recommendWithDetails(user, 3, null, null);
-                System.out.format("Recommendations for user %d:\n", user);
+               Set<Long> items=new HashSet<>(1);
+            items.add(1L);
+                ResultList recs = irec.recommendRelatedItemsWithDetails(items, 3, null, null);
+              //  System.out.format("Recommendations for user %d:\n", user);
                 for (Result item : recs) {
                     Entity itemData = dao.lookupEntity(CommonTypes.ITEM, item.getId());
                     String name = null;
@@ -82,7 +88,8 @@ public class LenskitUBCF {
                     }
                     System.out.format("\t%d (%s): %.2f\n", item.getId(), name, item.getScore());
                 }
-            }
+
+
         }
     }
 

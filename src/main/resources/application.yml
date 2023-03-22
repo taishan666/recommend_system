@@ -1,10 +1,19 @@
-# 应用名称
-spring:
-  application:
-    name: recommend_system
 # 应用服务 WEB 访问端口
 server:
   port: 8080
-
+  servlet:
+    encoding:
+      charset: UTF-8
+spring:
+  application:
+    name: recommend_system
+  task:
+    scheduling:
+      pool:
+        size: 9
+    execution:
+      pool:
+        core-size: 3
+        max-size: 9
 
 

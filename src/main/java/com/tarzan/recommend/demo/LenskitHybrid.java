@@ -2,6 +2,7 @@ package com.tarzan.recommend.demo;
 
 import com.tarzan.recommend.dao.FileDataDao;
 import com.tarzan.recommend.recommender.RecommenderFactory;
+import org.lenskit.LenskitRecommender;
 import org.lenskit.api.ItemRecommender;
 import org.lenskit.api.Result;
 import org.lenskit.api.ResultList;
@@ -30,9 +31,9 @@ public class LenskitHybrid {
             users.add(Long.parseLong(arg));
         }
         DataAccessObject  dao= FileDataDao.get();
-        ItemRecommender irec1= RecommenderFactory.getItemRecommender("popular",dao);
-        ItemRecommender irec2= RecommenderFactory.getItemRecommender("user-user",dao);
-        RankBlendingItemRecommender irec=new RankBlendingItemRecommender(irec1,irec2,0.9D);
+        LenskitRecommender rec1= RecommenderFactory.getRecommender("popular",dao);
+        LenskitRecommender rec2= RecommenderFactory.getRecommender("user-user",dao);
+        RankBlendingItemRecommender irec=new RankBlendingItemRecommender(rec1.getItemRecommender(),rec2.getItemRecommender(),0.9D);
         for (long user : users) {
             //为该用户获取10个推荐
             ResultList recs = irec.recommendWithDetails(user, 5, null, null);

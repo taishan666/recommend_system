@@ -33,8 +33,8 @@ public class CoreMath {
                 //关系系数
                 double coefficient = relateDist(v,userItems,type);
                 //关系距离
-                double distance=Math.abs(coefficient);
-                distMap.put(k,distance);
+             //   double distance=Math.abs(coefficient);
+                distMap.put(k,coefficient);
             }
         });
         return distMap;

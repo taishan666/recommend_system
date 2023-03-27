@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
+/**
+ * @author tarzan
+ */
 @SpringBootApplication
 public class RecommendSystemApplication {
 
@@ -20,3 +23,8 @@ public class RecommendSystemApplication {
 	}
 
 }
+
+
+
+
+

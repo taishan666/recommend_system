@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>org.lenskit</groupId>
 			<artifactId>lenskit-all</artifactId>
-			<version>3.0-M2</version>
+			<version>3.0-M3</version>
 		</dependency>
 		<!-- knife4j-->
 		<dependency>

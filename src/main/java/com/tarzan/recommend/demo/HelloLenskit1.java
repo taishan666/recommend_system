@@ -14,13 +14,12 @@ import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
 import org.lenskit.data.entities.Entity;
 import org.lenskit.knn.MinNeighbors;
+import org.lenskit.knn.NeighborhoodSize;
 import org.lenskit.knn.item.ItemItemItemBasedItemScorer;
 import org.lenskit.knn.item.ItemItemScorer;
 import org.lenskit.knn.item.ModelSize;
 import org.lenskit.knn.user.UserUserItemScorer;
-import org.lenskit.transform.normalize.BaselineSubtractingUserVectorNormalizer;
-import org.lenskit.transform.normalize.DefaultUserVectorNormalizer;
-import org.lenskit.transform.normalize.UserVectorNormalizer;
+import org.lenskit.transform.normalize.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +40,9 @@ public class HelloLenskit1 {
     public static void main(String[] args) throws IOException {
         // 配置Lenskit
         LenskitConfiguration config = new LenskitConfiguration();
-
         config.bind(ItemBasedItemScorer.class).to(ItemItemItemBasedItemScorer.class);
+        config.bind(BaselineScorer.class,ItemScorer.class).to(UserMeanItemScorer.class);
+        config.bind(UserMeanBaseline.class,ItemScorer.class).to(ItemMeanRatingItemScorer.class);
         config.bind(UserVectorNormalizer.class).to(BaselineSubtractingUserVectorNormalizer.class);
         // 读取数据
         Path dataFile = Paths.get("data/movielens.yml");
@@ -58,14 +58,14 @@ public class HelloLenskit1 {
         try (LenskitRecommender rec = engine.createRecommender(dao)) {
             logger.info("从推荐引擎中获得推荐");
             //我们想要推荐项
-            ItemRecommender irec = rec.getItemRecommender();
+            ItemBasedItemRecommender irec = rec.getItemBasedItemRecommender();
             //不为空，因为我们配置了一个
             assert irec != null;
             // 循环遍历用户集
             //为该用户获取10个推荐
             Set<Long> items=new HashSet<>(1);
             items.add(1L);
-            ResultList recs = irec.recommendWithDetails(1, 3, null, null);
+            ResultList recs = irec.recommendRelatedItemsWithDetails(items, 30, null, null);
             //  System.out.format("Recommendations for user %d:\n", user);
             for (Result item : recs) {
                 Entity itemData = dao.lookupEntity(CommonTypes.ITEM, item.getId());

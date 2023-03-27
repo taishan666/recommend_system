@@ -13,7 +13,9 @@ import org.lenskit.data.entities.Entity;
 import org.lenskit.knn.MinNeighbors;
 import org.lenskit.knn.item.ItemItemItemBasedItemScorer;
 import org.lenskit.knn.item.ModelSize;
+import org.lenskit.knn.user.UserSimilarity;
 import org.lenskit.knn.user.UserUserItemScorer;
+import org.lenskit.knn.user.UserVectorSimilarity;
 import org.lenskit.transform.normalize.DefaultUserVectorNormalizer;
 import org.lenskit.transform.normalize.UserVectorNormalizer;
 import org.slf4j.Logger;
@@ -42,20 +44,7 @@ public class LenskitUBCF {
         config.set(MinNeighbors.class).to(2);
         config.set(ModelSize.class).to(1000);
         config.bind(ItemBasedItemScorer.class).to(ItemItemItemBasedItemScorer.class);
-       // 配置协同过滤算法，使用 Pearson 相似度
-     //   config.bind(UserSimilarity.class).to(UserVectorSimilarity.class);
-    //    config.bind(VectorSimilarity.class).to(PearsonCorrelation.class);
-        // 配置用户向量归一化器
-        config.bind(UserVectorNormalizer.class).to(DefaultUserVectorNormalizer.class);
-        // 配置用户相似度阈值，过滤相似度低于该阈值的用户
-      //  config.set(UserSimilarityThreshold.class).to(0.5);
-      //  config.bind(AbstractItemScorer.class).to(UserUserItemScorer.class);
-       // 配置使用最近邻算法进行基于用户的协同过滤推荐
-      //  config.bind(UserUserItemScorer.class).to(KNNItemScorer.class);
-        // 配置构建推荐列表所需的上下文信息
-       // config.bind(ItemScorerContext.class).to(UserHistorySummarizer.class);
-        // 配置使用基于用户的协同过滤算法构建推荐列表
-      //  config.bind(BasicItemRecommender.class).to(UserUserItemRecommender.class);
+
 
         // 读取数据
         Path dataFile = Paths.get("data/movielens.yml");

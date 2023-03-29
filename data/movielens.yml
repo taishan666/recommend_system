@@ -1,5 +1,5 @@
 ratings:
-  file: ratings-test.csv
+  file: ratings.csv
   format: csv
   header: true
   entity_type: rating

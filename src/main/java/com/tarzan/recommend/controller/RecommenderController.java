@@ -3,37 +3,37 @@ package com.tarzan.recommend.controller;
 import com.tarzan.recommend.dao.FileDataDao;
 import com.tarzan.recommend.enums.RecommendTypeEnum;
 import com.tarzan.recommend.recommender.RecommenderFactory;
-import com.tarzan.recommend.utils.NeighborUtil;
 import com.tarzan.recommend.vo.ItemVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import it.unimi.dsi.fastutil.longs.*;
 import lombok.AllArgsConstructor;
 import org.lenskit.LenskitRecommender;
 import org.lenskit.api.ItemBasedItemRecommender;
 import org.lenskit.api.ItemRecommender;
+import org.lenskit.api.Result;
 import org.lenskit.data.dao.*;
 import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
 import org.lenskit.data.entities.Entity;
 import org.lenskit.data.entities.TypedName;
 import org.lenskit.knn.user.*;
+import org.lenskit.util.collections.SortedListAccumulator;
 import org.lenskit.util.io.ObjectStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author TARZAN
  */
-@Api(tags = "物品推荐接口")
+@Api(tags = "个性化推荐接口")
 @RestController
 @AllArgsConstructor
 public class RecommenderController {
-
-    private final NeighborUtil neighborUtil;
 
 
     @GetMapping("/user/recommend")
@@ -84,14 +84,21 @@ public class RecommenderController {
         return itemRecommender.recommendRelatedItems(itemId, num);
     }
 
-    @GetMapping("test")
-    @ApiOperation(value = "test")
-    public List<Long> test(long user, int num){
-        DataAccessObject  dao=FileDataDao.get();
-        Long2ObjectMap<List<Neighbor>> map=neighborUtil.findNeighbors(user,null);
-        System.out.println(map);
-        return null;
+    @GetMapping("findNeighbors")
+    @ApiOperation(value = "查找相似性用户")
+    public List<Neighbor> findNeighbors(long user, int num){
+        LenskitRecommender recommender= RecommenderFactory.getRecommender(RecommendTypeEnum.USER_CF.getType());
+        DataAccessObject dao= recommender.getDataAccessObject();
+        // 获取 LiveNeighborFinder 实例
+        NeighborFinder neighborFinder =recommender.get(NeighborFinder.class);
+        Iterable<Neighbor> neighbors=neighborFinder.getCandidateNeighbors(user, dao.getEntityIds(CommonTypes.ITEM));
+        SortedListAccumulator<Neighbor> tops= SortedListAccumulator.decreasing(num, Neighbor.SIMILARITY_COMPARATOR);
+        for (Neighbor nbr: neighbors) {
+            tops.add(nbr);
+        }
+        return tops.finish();
     }
+
 
 
 }

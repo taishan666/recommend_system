@@ -10,4 +10,5 @@ public class ItemVO {
     private Long id;
     private String name;
     private String genres;
+    private Double rating;
 }

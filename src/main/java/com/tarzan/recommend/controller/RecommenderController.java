@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.lenskit.LenskitRecommender;
 import org.lenskit.api.ItemBasedItemRecommender;
 import org.lenskit.api.ItemRecommender;
-import org.lenskit.api.Result;
 import org.lenskit.data.dao.*;
 import org.lenskit.data.entities.CommonAttributes;
 import org.lenskit.data.entities.CommonTypes;
@@ -23,9 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author TARZAN
@@ -67,6 +64,7 @@ public class RecommenderController {
         stream.forEach(e->{
             ItemVO vo=new ItemVO();
             vo.setId(e.getLong(CommonAttributes.ITEM_ID));
+            vo.setRating(e.getDouble(CommonAttributes.RATING));
             Entity itemData = dao.lookupEntity(CommonTypes.ITEM, vo.getId());
             vo.setName(itemData.maybeGet(CommonAttributes.NAME));
             vo.setGenres(itemData.maybeGet( TypedName.create("genres", String.class)));

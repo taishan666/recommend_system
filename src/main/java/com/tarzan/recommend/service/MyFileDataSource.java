@@ -1,7 +1,7 @@
 package com.tarzan.recommend.service;
 
-import com.tarzan.recommend.demo.service.FileDataSource;
-import com.tarzan.recommend.demo.dto.ItemDTO;
+import com.tarzan.recommend.service.FileDataSource;
+import com.tarzan.recommend.dto.ItemDTO;
 import com.tarzan.recommend.dto.MovieDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
@@ -30,7 +30,7 @@ public class MyFileDataSource {
      * @date 2020年07月31日 16:54:22
      */
     public static List<MovieDTO> getMovies() {
-        String folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-latest")).getPath();
+        String folderPath= "C:\\Users\\Lenovo\\Desktop\\ml-latest";
         List<MovieDTO> movies = Lists.newArrayList();
         int count=0;
         try {

@@ -1,7 +1,6 @@
 package com.tarzan.recommend.service;
 
-import com.tarzan.recommend.demo.service.FileDataSource;
-import com.tarzan.recommend.demo.dto.ItemDTO;
+import com.tarzan.recommend.dto.ItemDTO;
 import com.tarzan.recommend.model.fiile.BXDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;

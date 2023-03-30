@@ -62,7 +62,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-core -->
-		<dependency>
+<!--		<dependency>
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-core</artifactId>
 			<version>0.9</version>
@@ -71,11 +71,11 @@
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-integration</artifactId>
 			<version>0.9</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-examples</artifactId>
-			<version>0.9</version>
+			<version>0.13.0</version>
 		</dependency>
 
 		<dependency>

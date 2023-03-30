@@ -31,7 +31,7 @@ public class CustomRecommender {
     public static void buildModel(){
         try {
             long old=System.currentTimeMillis();
-            model=new MyFileDataModel(new File("E:\\work_space\\recommend_system\\src\\main\\resources\\ml-latest\\ratings.csv"));
+            model=new MyFileDataModel(new File("C:\\Users\\Lenovo\\Desktop\\ml-latest\\ratings.csv"));
             System.out.println("耗时 "+(System.currentTimeMillis()-old)+" ms");
         } catch (IOException e) {
             e.printStackTrace();

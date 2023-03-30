@@ -1,6 +1,4 @@
-import org.lenskit.api.ItemBasedItemRecommender
 import org.lenskit.api.ItemBasedItemScorer
-import org.lenskit.basic.TopNItemBasedItemRecommender
 import org.lenskit.knn.item.ItemItemItemBasedItemScorer
 import org.lenskit.transform.normalize.BaselineSubtractingUserVectorNormalizer
 import org.lenskit.transform.normalize.UserVectorNormalizer

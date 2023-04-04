@@ -7,6 +7,8 @@ import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.RandomRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.svd.ALSWRFactorizer;
 import org.apache.mahout.cf.taste.impl.recommender.svd.SVDRecommender;
+import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
@@ -31,7 +33,7 @@ public class CustomRecommender {
     public static void buildModel(){
         try {
             long old=System.currentTimeMillis();
-            model=new MyFileDataModel(new File("C:\\Users\\Lenovo\\Desktop\\ml-latest\\ratings.csv"));
+            model=new MyFileDataModel(new File("C:\\Users\\Lenovo\\Desktop\\data\\ratings.csv"));
             System.out.println("耗时 "+(System.currentTimeMillis()-old)+" ms");
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,7 +81,7 @@ public class CustomRecommender {
         try {
             long old=System.currentTimeMillis();
             // 指定用户相似度计算方法，这里采用皮尔森相关度
-            ItemSimilarity similarity = new PearsonCorrelationSimilarity(model);
+            ItemSimilarity similarity = new EuclideanDistanceSimilarity(model);
             // 构建基于物品的推荐系统
             GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(model, similarity);
             //Recommender recommender =new  CachingRecommender(new GenericItemBasedRecommender(model, similarity));
@@ -97,7 +99,7 @@ public class CustomRecommender {
         try {
             long old=System.currentTimeMillis();
             // 指定用户相似度计算方法，这里采用皮尔森相关度
-            ItemSimilarity similarity = new PearsonCorrelationSimilarity(model);
+            ItemSimilarity similarity = new LogLikelihoodSimilarity(model);
             // 构建基于物品的推荐系统
             GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(model, similarity);
             List<RecommendedItem> list=  recommender.mostSimilarItems(itemId,size);

@@ -30,7 +30,7 @@ public class MyFileDataSource {
      * @date 2020年07月31日 16:54:22
      */
     public static List<MovieDTO> getMovies() {
-        String folderPath= "C:\\Users\\Lenovo\\Desktop\\ml-latest";
+        String folderPath= "C:\\Users\\Lenovo\\Desktop\\data";
         List<MovieDTO> movies = Lists.newArrayList();
         int count=0;
         try {

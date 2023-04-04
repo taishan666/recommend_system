@@ -7,9 +7,7 @@ import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.RandomRecommender;
 import org.apache.mahout.cf.taste.impl.recommender.svd.ALSWRFactorizer;
 import org.apache.mahout.cf.taste.impl.recommender.svd.SVDRecommender;
-import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
-import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
-import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.*;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
@@ -99,7 +97,7 @@ public class CustomRecommender {
         try {
             long old=System.currentTimeMillis();
             // 指定用户相似度计算方法，这里采用皮尔森相关度
-            ItemSimilarity similarity = new LogLikelihoodSimilarity(model);
+            ItemSimilarity similarity = new UncenteredCosineSimilarity(model);
             // 构建基于物品的推荐系统
             GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(model, similarity);
             List<RecommendedItem> list=  recommender.mostSimilarItems(itemId,size);

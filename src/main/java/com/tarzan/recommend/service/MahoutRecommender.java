@@ -24,11 +24,11 @@ public final class MahoutRecommender implements Recommender {
 
     private final Recommender recommender;
 
-    public MahoutRecommender(DataModel bcModel) throws TasteException {
-        UserSimilarity similarity = new CachingUserSimilarity(new EuclideanDistanceSimilarity(bcModel), bcModel);
+    public MahoutRecommender(DataModel model) throws TasteException {
+        UserSimilarity similarity = new CachingUserSimilarity(new EuclideanDistanceSimilarity(model), model);
         UserNeighborhood neighborhood =
-                new NearestNUserNeighborhood(10,similarity, bcModel);
-        recommender = new GenericBooleanPrefUserBasedRecommender(bcModel, neighborhood, similarity);
+                new NearestNUserNeighborhood(10,similarity, model);
+        recommender = new GenericBooleanPrefUserBasedRecommender(model, neighborhood, similarity);
     }
 
     @Override

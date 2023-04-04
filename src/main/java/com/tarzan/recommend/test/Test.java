@@ -16,7 +16,7 @@ public class Test {
         items1.forEach(e-> System.out.println(e));
 
 
-        List<MovieDTO> items2=MovieRecommender.similarMovies(1,1,10);
+        List<MovieDTO> items2=MovieRecommender.similarMovies(1,10);
         System.out.println("-------------------------------------------");
         items2.forEach(e-> System.out.println(e));
 

@@ -14,7 +14,7 @@ public class TestDB {
         items1.forEach(e-> System.out.println(e));
 
 
-        List<MovieDTO> items2=MovieRecommender.similarMovies(1,1,3);
+        List<MovieDTO> items2=MovieRecommender.similarMovies1(1,3);
         System.out.println("-------------------------------------------");
         items2.forEach(e-> System.out.println(e));
 

@@ -21,6 +21,9 @@ public class FileDataSource {
 
 
       public  static String folderPath;
+      static {
+          folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
+      }
 
 
     /**
@@ -31,7 +34,6 @@ public class FileDataSource {
      * @date 2020年07月31日 16:53:40
      */
     public static List<RelateDTO> getData() {
-        folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
         List<RelateDTO> relateList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.data");
@@ -43,7 +45,7 @@ public class FileDataSource {
                 String[] ht = newline.split(" ");
                 Integer userId = Integer.parseInt(ht[0]);
                 Integer movieId = Integer.parseInt(ht[1]);
-                Integer rating = Integer.parseInt(ht[2]);
+                Double rating = Double.parseDouble(ht[2]);
                 RelateDTO dto = new RelateDTO(userId, movieId, rating);
                 relateList.add(dto);
             }
@@ -61,7 +63,6 @@ public class FileDataSource {
      * @date 2020年07月31日 16:54:51
      */
     public static List<UserDTO> getUserData() {
-        folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
         List<UserDTO> userList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.user");
@@ -94,7 +95,6 @@ public class FileDataSource {
      * @date 2020年07月31日 16:54:22
      */
     public static List<ItemDTO> getItemData() {
-        folderPath= Objects.requireNonNull(FileDataSource.class.getResource("/ml-100k")).getPath();
         List<ItemDTO> itemList = Lists.newArrayList();
         try {
             FileInputStream out = new FileInputStream(folderPath+"\\u.item");

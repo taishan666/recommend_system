@@ -50,8 +50,8 @@ public class CoreMath {
      * @return double
      */
     private static double relateDist(List<RelateDTO> xList, List<RelateDTO> yList,int type) {
-        List<Integer> xs= Lists.newArrayList();
-        List<Integer> ys= Lists.newArrayList();
+        List<Double> xs= Lists.newArrayList();
+        List<Double> ys= Lists.newArrayList();
         xList.forEach(x->{
             yList.forEach(y->{
                 if(type==0){
@@ -79,7 +79,7 @@ public class CoreMath {
      * @author tarzan
      * @date 2020年07月31日 17:03:20
      */
-    public static double getRelate(List<Integer> xs, List<Integer> ys){
+    public static double getRelate(List<Double> xs, List<Double> ys){
         int n=xs.size();
         //至少有两个元素
         if (n<2) {

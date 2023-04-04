@@ -21,7 +21,7 @@ public class RelateDTO {
     /** 物品id */
     private Integer itemId;
     /** 指数 */
-    private Integer index;
+    private Double index;
 
 
 }

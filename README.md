@@ -162,16 +162,11 @@ Spring boot单项目
 
 3.项目中用到的文件数据集ml-100k 在 src / main / resources目录下
 
-#### 技术交流&问题反馈
 
-      刚刚整理的代码还有很多不足之处，如有问题请联系我
 
-      联系QQ:1334512682 
-      微信号：vxhqqh
+#### 推荐阅读
 
-#### 我的博客
-
-[洛阳泰山](https://blog.csdn.net/weixin_40986713)
+[推荐算法专栏](https://blog.csdn.net/weixin_40986713/category_12268014.html?spm=1001.2014.3001.5482)
 
 
 

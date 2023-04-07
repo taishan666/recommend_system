@@ -78,11 +78,6 @@
 			<version>0.13.0</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.lenskit</groupId>
-			<artifactId>lenskit-all</artifactId>
-			<version>3.0-M2</version>
-		</dependency>
 
 
 		<!--		<dependency>

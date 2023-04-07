@@ -4,6 +4,7 @@ import org.apache.mahout.cf.taste.common.Refreshable;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
 import org.apache.mahout.cf.taste.impl.recommender.GenericBooleanPrefUserBasedRecommender;
+import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.CachingUserSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.EuclideanDistanceSimilarity;
 import org.apache.mahout.cf.taste.impl.similarity.LogLikelihoodSimilarity;
@@ -30,6 +31,14 @@ public final class MahoutRecommender implements Recommender {
                 new NearestNUserNeighborhood(10,similarity, model);
         recommender = new GenericBooleanPrefUserBasedRecommender(model, neighborhood, similarity);
     }
+
+    public MahoutRecommender(DataModel model,UserSimilarity userSimilarity) throws TasteException {
+        UserSimilarity similarity = new CachingUserSimilarity(userSimilarity, model);
+        UserNeighborhood neighborhood =
+                new NearestNUserNeighborhood(20,similarity, model);
+        recommender = new GenericUserBasedRecommender(model, neighborhood, similarity);
+    }
+
 
     @Override
     public List<RecommendedItem> recommend(long userID, int howMany) throws TasteException {

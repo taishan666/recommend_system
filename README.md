@@ -164,10 +164,14 @@ Spring boot单项目
 
 
 
+
 #### 推荐阅读
 
 [推荐算法专栏](https://blog.csdn.net/weixin_40986713/category_12268014.html?spm=1001.2014.3001.5482)
 
 
 
+#### 常见问题
+
+[点击查看](https://gitee.com/taisan/recommend_system/issues?assignee_id=&author_id=&branch=&collaborator_ids=&issue_search=&label_ids=&label_text=&milestone_id=&priority=&private_issue=&program_id=&project_id=taisan%2Frecommend_system&project_type=&scope=&single_label_id=&single_label_text=&sort=&state=closed&target_project=)
 
